@@ -48,13 +48,20 @@
         return temporary;
     }
 
-    static string[] ReducingArray(string[] array, int expandCount = 1)
+    static string[] ReducingArray(string[] array, int reducingCount = 1)
     {
-        string[] temporary = new string[array.Length - expandCount];
+        string[] temporary = new string[array.Length - reducingCount];
 
         for (int i = 0; i < array.Length; i++)
         {
-            temporary[i] = array[i];
+            if (array[i] == null)
+            {
+                continue;
+            }
+            else
+            {
+                temporary[i] = array[i];
+            }
         }
 
         return temporary;
@@ -100,16 +107,11 @@
         Console.Write("Введите номер досье, который хотите удалить: ");
         int numberDossier = Convert.ToInt32(Console.ReadLine());
 
-        for (int i = 0; i < fullNamePersons.Length; i++)
-        {
-            if (numberDossier - 1 == i)
-            {
-                fullNamePersons[i] = fullNamePersons[fullNamePersons.Length - 1];
-                jobPersons[i] = jobPersons[jobPersons.Length - 1];
-            }
-            fullNamePersons[fullNamePersons.Length - 1] = null;
-            jobPersons[jobPersons.Length - 1] = null;
-        }
+        fullNamePersons[fullNamePersons.Length - 1] = fullNamePersons[numberDossier - 1];
+        jobPersons[jobPersons.Length -1] = jobPersons[numberDossier - 1];
+
+        fullNamePersons[fullNamePersons.Length - 1] = null;
+        jobPersons[jobPersons.Length - 1] = null;
 
         ReducingArray(fullNamePersons);
         ReducingArray(jobPersons);
