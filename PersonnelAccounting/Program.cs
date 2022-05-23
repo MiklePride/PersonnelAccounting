@@ -26,8 +26,13 @@
                     DeliteDossier(ref fullNamesPersons, ref jobsPersons);
                     break;
                 case "4":
+                    SearchDossierByLastName(ref fullNamesPersons, ref jobsPersons);
                     break;
                 case "5":
+                    isExit = true;
+                    break;
+                default:
+                    Console.WriteLine("Такой команды нет.");
                     break;
 
 
@@ -52,16 +57,10 @@
     {
         string[] temporary = new string[array.Length - reducingCount];
 
-        for (int i = 0; i < array.Length; i++)
+        for (int i = 0; i < array.Length - reducingCount; i++)
         {
-            if (array[i] == null)
-            {
-                continue;
-            }
-            else
-            {
-                temporary[i] = array[i];
-            }
+         
+            temporary[i] = array[i];
         }
 
         return temporary;
@@ -106,15 +105,35 @@
 
         Console.Write("Введите номер досье, который хотите удалить: ");
         int numberDossier = Convert.ToInt32(Console.ReadLine());
+        
+        fullNamePersons[numberDossier - 1] = fullNamePersons[fullNamePersons.Length - 1];
+        jobPersons[numberDossier - 1] = jobPersons[jobPersons.Length - 1];
 
-        fullNamePersons[fullNamePersons.Length - 1] = fullNamePersons[numberDossier - 1];
-        jobPersons[jobPersons.Length -1] = jobPersons[numberDossier - 1];
-
-        fullNamePersons[fullNamePersons.Length - 1] = null;
-        jobPersons[jobPersons.Length - 1] = null;
-
-        ReducingArray(fullNamePersons);
-        ReducingArray(jobPersons);
+        fullNamePersons = ReducingArray(fullNamePersons);
+        jobPersons = ReducingArray(jobPersons);
         DisplayDossierOnScreen(ref fullNamePersons, ref jobPersons);
+    }
+
+    static void SearchDossierByLastName(ref string[] fullNamePersons, ref string[] jobPersons)
+    {
+        Console.Clear();
+        Console.WriteLine("Введите фамилию для поиска:");
+        string lastName = Console.ReadLine();
+
+        for (int i = 0; i < fullNamePersons.Length; i++)
+        {
+            string[] fullNameSplit = fullNamePersons[i].Split(' ');
+
+            for (int j = 0; j < fullNameSplit.Length; j++)
+            {
+                if (fullNameSplit[j] == lastName)
+                {
+                    Console.Write($"{i + 1} - {fullNamePersons[i]}: {jobPersons[i]}.\n");
+                }
+            }
+        }
+        Console.WriteLine("\nНажмите любую кнопку для продолжения.");
+        Console.ReadKey();
+        Console.Clear();
     }
 }
