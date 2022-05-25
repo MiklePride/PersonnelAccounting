@@ -20,13 +20,13 @@
                     AddDossier(ref fullNamesPersons, ref jobsPersons);
                     break;
                 case "2":
-                    DisplayDossierOnScreen(ref fullNamesPersons, ref jobsPersons);
+                    DisplayDossierOnScreen(fullNamesPersons, jobsPersons);
                     break;
                 case "3":
                     DeliteDossier(ref fullNamesPersons, ref jobsPersons);
                     break;
                 case "4":
-                    SearchDossierByLastName(ref fullNamesPersons, ref jobsPersons);
+                    SearchDossierByLastName(fullNamesPersons, jobsPersons);
                     break;
                 case "5":
                     isExit = true;
@@ -86,7 +86,7 @@
         jobsPersons[jobsPersons.Length - 1] = jobPerson;
     }
 
-    static void DisplayDossierOnScreen(ref string[] fullNamePersons, ref string[] jobPersons)
+    static void DisplayDossierOnScreen( string[] fullNamePersons, string[] jobPersons)
     {
         Console.Clear();
 
@@ -101,7 +101,7 @@
 
     static void DeliteDossier(ref string[] fullNamePersons, ref string[] jobPersons)
     {
-        DisplayDossierOnScreen(ref fullNamePersons, ref jobPersons);
+        DisplayDossierOnScreen(fullNamePersons, jobPersons);
 
         Console.Write("Введите номер досье, который хотите удалить: ");
         int numberDossier = Convert.ToInt32(Console.ReadLine());
@@ -111,10 +111,10 @@
 
         fullNamePersons = ReducingArray(fullNamePersons);
         jobPersons = ReducingArray(jobPersons);
-        DisplayDossierOnScreen(ref fullNamePersons, ref jobPersons);
+        DisplayDossierOnScreen(fullNamePersons, jobPersons);
     }
 
-    static void SearchDossierByLastName(ref string[] fullNamePersons, ref string[] jobPersons)
+    static void SearchDossierByLastName(string[] fullNamePersons, string[] jobPersons)
     {
         Console.Clear();
         Console.WriteLine("Введите фамилию для поиска:");
